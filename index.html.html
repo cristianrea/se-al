@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>fourier</title>
+    <script src="script/p5.min.js"></script>
+    <script src="script/p5.dom.min.js"></script>
+    <script>
+      let time = 0;
+let wave = [];
+let slider;
+let slider2;
+let slider3;
+let slider4;
+
+   
+    
+function setup() {
+  createCanvas(600, 400);
+  slider = createSlider(1, 50, 25);
+  slider2 = createSlider(1, 3, 2);
+
+  
+}
+
+function draw() {
+  
+  background (0);
+  
+  translate(150, 200);
+
+  let x = 0;
+  let y = 0;
+
+  for (let i = 0; i < slider.value(); i++) {
+    let prevx = x;
+    let prevy = y;
+
+    let n = i * slider2.value() + 1;
+    let radius = 75 * (4 / (n * PI));
+    x += radius * cos(n * time);
+    y += radius * sin(n * time);
+
+    stroke(255, 100);
+    noFill();
+    ellipse(prevx, prevy, radius * 2);
+
+    fill(255);
+    stroke(255);
+    line(prevx, prevy, x, y);
+    ellipse(x, y, 2);
+  }
+  wave.unshift(y);
+
+
+  translate(200, 0);
+  line(x - 200, y, 0, wave[0]);
+  beginShape();
+  noFill();
+  for (let i = 0; i < wave.length; i++) {
+    vertex(i, wave[i]);
+  }
+  endShape();
+
+  time += 0.05;
+  if (time > PI  * 2) {
+    path = [];
+    time = 0;
+  }
+
+  if (wave.length > 250) {
+    wave.pop();
+  }
+}
+
+    </script>
+    
+    <style>
+      body {
+    background-color: black;
+}
+input:not([type="image" i]) {
+    box-sizing: border-box;
+    
+}
+
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center; color: white;  font-size: 30px;">Series de Fouriuer</h1>
+
+<p style="text-align: center; color: white; font-size: 20px">Modifique la señal</p>
+
+<div>
+    <p  style="text-align: justify; color: white; font-size: 20px">
+        En una serie de Fourier, hay tres parámetros que se pueden modificar para cambiar la forma en que se representa la señal o función:
+        <br>
+        <br>
+        La frecuencia angular (⇤ control izquierdo): esta es la frecuencia angular de la señal en radianes por segundo. A mayor frecuencia angular mayor será la velocidad de cambio de la señal en tiempo.
+        <br>
+        La amplitud (⇥ control derecho): esta es la amplitud de la señal o función. A mayor amplitud, mayor será la amplitud de las ondas senoidales que componen la señal.
+        <br>
+        La fase (valor unitario): la fase de la señal o función. La fase indica el momento en que se inicia la señal y como se desplaza en el tiempo.
+        <br>
+        <br>
+        Modificando estos tres parámetros puedes controlar la forma en que se representa la señal o función a través de la superposición.
+        <br>
+        Por ejemplo, si aumentas la frecuencia angular de una seña, esta se volverá más rápida y tendrá una forma más aguda. Si aumentaras la amplitud de una señal, esta se volverá más grande y tendrá una forma más pronunciada. Y si cambias la fase de la señal, esta se desplazará en el tiempo y tendrá una forma diferente.  
+    </p>
+</div>
+<footer>
+  <p style="text-align: center; color: white; font-size: large;"> M.A grupo 1 2023-1 // Integrantes: Cordero Evelyn Patricia / Luna Alanis Emanuel / Rea Alberto Cristian</p>
+</footer>
+
+  </body>
+</html>
